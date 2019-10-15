@@ -61,7 +61,12 @@ class ValuationApi(object):
 
         place = Place()
         try:
-            place.set_data(xmltodict_data.get('SearchResults:searchresults', None)['response']['results']['result'])
+            result = xmltodict_data.get('SearchResults:searchresults', None)['response']['results']['result']
+
+            if type(result) is list and len(result) > 0:
+                result = result[0]
+
+            place.set_data(result)
         except:
             raise ZillowError({'message': "Zillow did not return a valid response: %s" % data})
 
@@ -127,7 +132,12 @@ class ValuationApi(object):
 
         place = Place(has_extended_data=True)
         try:
-            place.set_data(xmltodict_data.get('SearchResults:searchresults', None)['response']['results']['result'])
+            result = xmltodict_data.get('SearchResults:searchresults', None)['response']['results']['result']
+
+            if type(result) is list and len(result) > 0:
+                result = result[0]
+
+            place.set_data(result)
         except:
             raise ZillowError({'message': "Zillow did not return a valid response: %s" % data})
 
